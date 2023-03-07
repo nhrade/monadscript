@@ -1,4 +1,4 @@
-import Maybe from "../src/maybe";
+import Maybe, { Just } from "../src/maybe";
 
 test("creates maybe monad", () => {
     const maybe = new Maybe<number>(1);
@@ -30,6 +30,7 @@ test("tests shift", () => {
 
 
 test("tests fail", () => {
+
     const maybe = () => (new Maybe<any>(1))
         .bind(n => Maybe.return(null))
         .fail("fail the bind");

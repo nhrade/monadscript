@@ -49,6 +49,15 @@ export default abstract class Monad<T> {
     public abstract bind(fn: BindCallback<T>): Monad<T>;
 
     /**
+     * Alias for bind
+     * @param fn callback to apply to value
+     * @returns monad with function applied to value
+     */
+    public then(fn: BindCallback<T>): Monad<T> {
+        return this.bind(fn);
+    }
+
+    /**
      * Shift >> operator which discards input and has no callback.
      * @param other other monad to use for shift
      * @returns new returned monad
@@ -64,5 +73,7 @@ export default abstract class Monad<T> {
     public fail(message: string): void {
         throw new Error(message);
     }
+
+    public abstract return(value: T): Monad<T>;
 
 }

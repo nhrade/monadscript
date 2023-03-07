@@ -11,6 +11,14 @@ import Monad, { BindCallback } from './monad';
 export default class Maybe<T> extends Monad<T> {
 
     /**
+     * Returns value from maybe
+     * @param value 
+     */
+    public return(value: T): Monad<T> {
+        throw new Error('Method not implemented.');
+    }
+
+    /**
      * Constructor for maybe monad
      * @param value Value to wrap
      */
@@ -30,7 +38,8 @@ export default class Maybe<T> extends Monad<T> {
     /**
      * Bind a function to the maybe monad. 
      * This unwraps the monad value, applies the function and wraps it again.
-     * @param fn callback to pass through.
+     * @param fn callback to apply to value
+     * @returns monad with function applied to value
      */
     public bind(fn: BindCallback<T>): Monad<T> {
         if (this.value === null) {
@@ -48,4 +57,13 @@ export default class Maybe<T> extends Monad<T> {
         return this.value === other.value;
     }
 
+}
+
+/**
+ * Constructor for non-null monad.
+ * @param value value of monad
+ * @returns new maybe monad
+ */
+export function Just<T>(value: any) {
+    return new Maybe<T>(value);
 }
