@@ -49,7 +49,7 @@ export default abstract class Monad<T> {
     public abstract bind(fn: BindCallback<T>): Monad<T>;
 
     /**
-     * Alias for bind
+     * Alias for bind. This function applies the function fn to the monadic value this is wrapped and returns the new monad.
      * @param fn callback to apply to value
      * @returns monad with function applied to value
      */
