@@ -47,10 +47,37 @@ public abstract bind(fn: BindCallback<T>): Monad<T>
 Meaning that bind takes in a function with the signature ```(value: T) => Monad<T>``` and returns 
 a new monadic value. Thus our bind function must be passed a function that returns a new monad. This means that our monad is immutable and can be used without race conditions, etc. However, it can be a bit cumbersome to work with.
 
+We can also use the alias ```then``` instead of bind, which just calls the corresponding bind function. This mirrors the promise syntax better than using bind. For the maybe monad we can do this for example.
+
+```typescript
+const maybe = (new Maybe<number>(4))
+    .then(x => x * x)
+    .then(x => x + 1);
+console.log(maybe.value)
+```
+The value should then be 17.
+
 ### Monad
 
 Monad is an abstract class which must be extended and then the bind function implemented.
 Bind acts like an operator which binds a function to the monad and applies that function to the wrapped value producing a new monad. This is similar to the behavior of a functor with the fmap function. In some sense a monad is an object that can be "mapped" to.
+
+To implement a new monad subclass monad and implement bind and return like this.
+
+```typescript
+class NewMonad<T> extends Monad<T> {
+
+    public bind(fn: BindCallback<T>): Monad<T> {
+        // put implementation here.
+    }
+
+    public return(value: T): Monad<T> {
+        // put implementation here./
+    }
+}
+```
+
+Bind applies a function to the wrapped value and returns a new monad. Whereas return returns a new monad based upon an unwrapped value. A constructor should also be implemented however depending on the monadic context that may be unnecessary.
 
 ### Maybe
 
