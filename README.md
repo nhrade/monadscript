@@ -81,11 +81,25 @@ Bind applies a function to the wrapped value and returns a new monad. Whereas re
 
 ### Maybe
 
-Maybe is a monad which can return a value or return nothing at all. It is like a failure monad which can fail but doesn't necessarily do so. Thus it is similar to a Promise.
+Maybe is a monad which can return a value or return nothing at all. It is like a failure monad which can fail but doesn't necessarily do so. Thus it is similar to a Promise except it doesn't directly deal with asynchronous programming. For example in most programming languages we might do a null check before doing new computations.
+
+```javascript
+const x = null;
+if(x === null) {
+    // do something if null
+}
+```
+
+However, with the maybe monad we just continue with the next computation and store the result.
 
 ```typescript
-new Maybe<>
+const maybe = (new Maybe<number>(2))
+    .bind(x => x + 1)
+    .bind(_ => null)
+    .bind(x => x * x);
 ```
+
+This won't fail and instead it will just store null as the value in the maybe. This isn't great if we want to check for null behavior but if we want to pass over it quietly and continue with other computations we no longer have to do a null check to see if the value is null.
 
 ### Canvas
 
